@@ -22,7 +22,7 @@
 	 set 设置值
 	 remove 删除值
 	 isSupport 判断是否支持sessionStorage/localStorage/cookie
-	 setType 支持修改type
+	 setType 修改type
 
 	var storage = new StorageUtil(type,{
 		success:function(){
@@ -35,10 +35,10 @@
 	</pre>
 	<h3>示例</h3>
 	<pre>
-	//判断是否支持,注意工具已做容错处理，即使客户端不支持，也不会因报错而无法执行js，只是无法设置成功，获取值时为null
+	//判断是否支持,工具已做容错处理，即使客户端不支持，也不会因报错导致页面崩溃，只是无法设置成功，获取值时为null
 	new StorageUtil().isSupport();//sessionStorage
-	new StorageUtil('localStorage').isSupport();
-	new StorageUtil('cookie').isSupport();
+	new StorageUtil('localStorage').isSupport();//localStorage
+	new StorageUtil('cookie').isSupport();//cookie
 
 
 	//sessionStorage
@@ -74,9 +74,56 @@
 	new StorageUtil('localStorage').set('obj',{'test':1}).get('obj')//{test: 1}
 	new StorageUtil('cookie').set('obj',{'test':1}).get('obj')//{test: 1}
 	</pre>
+	<h4>无限链式</h4>
+	<pre>
+	new StorageUtil().set('msg','你翩翩地路过，').get('msg',function(msg){
+		console.log(msg);
+	}).setType('localStorage').set('msg','以为不曾留下什么，').get('msg',function(msg){
+		console.log(msg);
+	}).setType('cookie').set('msg','却在我心里有了思念，').get('msg',function(msg){
+		console.log(msg);
+	}).setType('sessionStorage').set('msg','若你还记得，').get('msg',function(msg){
+		console.log(msg);
+	}).setType('localStorage').set('msg','那个蝉鸣的夏天，').get('msg',function(msg){
+		console.log(msg);
+	}).setType('cookie').set('msg','有一个你，也有一个我。').get('msg',function(msg){
+		console.log(msg);
+	})
+	</pre>
+	<h4>批量操作</h4>
+	<pre>
+	//批量get
+	new StorageUtil().get('key1,key2');
+	//批量set sessionStorage/localStorage
+	new StorageUtil().set({ke1:1,key2:2});
+	//批量set cookie time 可选
+	var time = 5 * 60 * 60 * 1000;
+
+	new StorageUtil().set({ke1:1,key2:2},time);
+	//批量删除 sessionStorage/localStorage/cookie
+	new StorageUtil().remove('key1,key2');
+	</pre>
+	<h4>无限链式+批量</h4>
+	<pre>
+	new StorageUtil().set({key3:3,key4:4}).get('key3,key4',function(key3,key4){
+		console.log(key3,key4);
+	}).remove('key3,key4');
+	</pre>
 	<script src="storage.js"></script>
 	<script>
-		new StorageUtil().set('msg','hello world').setType('localStorage').set('msg','hello world').setType('cookie').set('msg','hello world');
+		new StorageUtil().set('msg','你翩翩地路过，').get('msg',function(msg){
+			console.log(msg);
+		}).setType('localStorage').set('msg','以为不曾留下什么，').get('msg',function(msg){
+			console.log(msg);
+		}).setType('cookie').set('msg','却在我心里有了思念，').get('msg',function(msg){
+			console.log(msg);
+		}).setType('sessionStorage').set('msg','若你还记得，').get('msg',function(msg){
+			console.log(msg);
+		}).setType('localStorage').set('msg','那个蝉鸣的夏天，').get('msg',function(msg){
+			console.log(msg);
+		}).setType('cookie').set('msg','有一个你，也有一个我。').get('msg',function(msg){
+			console.log(msg);
+		})
 	</script>
 </body>
 </html>

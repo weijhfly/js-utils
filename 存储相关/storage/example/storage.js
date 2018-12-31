@@ -18,22 +18,16 @@
         isSupport: function() {
             return this.isCookie ? document.cookie && navigator.cookieEnabled: typeof window[this.type] != 'undefined';
         },
-        get: function(key) {
+        get: function(key,callback) {
             try {
-                if (this.isCookie()) {
-                    var reg = new RegExp("(^| )" + key + "=([^;]*)(;|$)"),
-                    arr = document.cookie.match(reg);
+                var obj = key.split(','),
+                    res = this.master(obj,'get');
 
-                    if (arr) {
-                        var value = unescape(arr[2]);
-                        
-                        return this.isJson(value) || value;
-                    } else {
-                        return null;
-                    }
-                } else {
-                    var value = window[this.type][key];
-                    return this.isJson(value) || value;
+                if(callback){
+                    callback.apply(this,res);
+                    return this;
+                }else{
+                    return obj.length > 1? res : res[0] || null;
                 }
             } catch(e) {
                 console.error(e);
@@ -42,18 +36,17 @@
         },
         set: function(key, value, time) {
             try {
-                var value = typeof value == 'object' ? JSON.stringify(value) : value;
+                var obj = {};
 
-                if (this.isCookie()) {
-                    var time = time || 2 * 60 * 60 * 1000,
-                    date = new Date();
+                if(typeof key != 'object'){
+                    obj[key] = value;
+                }else{
+                    var time = value;
 
-                    date.setTime(date.getTime() + time);
-
-                    document.cookie = key + "=" + escape(value) + ";expires=" + date.toGMTString();
-                } else {
-                    window[this.type][key] = value;
+                    obj = key;
                 }
+                this.master(obj,'set',time);
+
                 this.success();
             } catch(e) {
                 console.error(e);
@@ -63,18 +56,9 @@
         },
         remove: function(key) {
             try {
-                if (this.isCookie()) {
-                    var exp = new Date();
+                var obj = key.split(',');
 
-                    exp.setTime(exp.getTime() - 1);
-
-                    var content = this.get(key);
-
-                    if (content != null) document.cookie = key + "=" + content + ";expires=" + exp.toGMTString();
-
-                } else {
-                    delete window[this.type][key];
-                }
+                this.master(obj,'remove');
             } catch(e) {
                 console.error(e);
             }
@@ -84,6 +68,65 @@
             this.type = type;
 
             return this;
+        },
+        master:function(obj,flag,time){
+            var result = [],
+                isCookie = this.isCookie(),
+                _this = this;
+
+            if(flag == 'get'){
+                for(var o in obj){
+                     get(obj[o]);
+                }
+                return result;
+            }else if(flag == 'set'){
+                for(var o in obj){
+                     set(o,obj[o],time);
+                }
+            }else if(flag == 'remove'){
+                for(var o in obj){
+                     remove(obj[o]);
+                }
+            }
+            function get(key){
+                if(isCookie){
+                    var reg = new RegExp("(^| )" + key + "=([^;]*)(;|$)"),
+                        arr = document.cookie.match(reg),
+                        value = arr? unescape(arr[2]) : null;
+
+                    result.push(_this.isJson(value) || value);
+                }else{
+                    var value = window[_this.type][key];
+
+                    result.push(_this.isJson(value) || value);
+                }
+            }
+            function set(key,value,time){
+                var value = typeof value == 'object' ? JSON.stringify(value) : value;
+
+                if(isCookie){
+                    time = time || 2 * 60 * 60 * 1000;
+
+                    var date = new Date();
+                        
+                    date.setTime(date.getTime() + time);
+                    document.cookie = key + "=" + escape(value) + ";expires=" + date.toGMTString();
+                }else{
+                    window[_this.type][key] = value;
+                }
+            }
+            function remove(key){
+                if(isCookie){
+                    var exp = new Date(),
+                        value = _this.get(key);
+
+                    exp.setTime(exp.getTime() - 1);
+
+                    if (value != null) document.cookie = key + "=" + value + ";expires=" + exp.toGMTString();
+                }else{
+                    delete window[_this.type][key];
+                }
+            }
         },
         isJson: function(str) {
             var data;
