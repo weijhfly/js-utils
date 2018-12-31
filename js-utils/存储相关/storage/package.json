@@ -1,0 +1,16 @@
+{
+  "name": "storage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "storage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "gulp server"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "gulp": "^4.0.0"
+  }
+}

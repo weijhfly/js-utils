@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=0" />
+	<title>demo</title>
+	<style>
+		pre{padding:10px;background: #eee;}
+	</style>
+</head>
+<body>
+	<h3>整合操作sessionStorage、localStorage、cookie的小工具(支持umd)</h3>
+	<hr>
+	<h3>参数说明</h3>
+	<pre>
+	type: 可选 值->sessionStorage、localStorage、cookie之一，默认sessionStorage
+	success: 可选 设置成功后的回调，注意要放在对象里，下同
+	fail: 可选 设置失败后的回调
+
+	一些方法：
+	 get 获取值
+	 set 设置值
+	 remove 删除值
+	 isSupport 判断是否支持sessionStorage/localStorage/cookie
+	 setType 支持修改type
+
+	var storage = new StorageUtil(type,{
+		success:function(){
+			console.log('成功了');
+		},
+		fail:function(){
+			console.log('失败了');
+		}
+	});
+	</pre>
+	<h3>示例</h3>
+	<pre>
+	//判断是否支持,注意工具已做容错处理，即使客户端不支持，也不会因报错而无法执行js，只是无法设置成功，获取值时为null
+	new StorageUtil().isSupport();//sessionStorage
+	new StorageUtil('localStorage').isSupport();
+	new StorageUtil('cookie').isSupport();
+
+
+	//sessionStorage
+	var storage = new StorageUtil();
+
+	storage.set('sessionStoragekey',1);
+	storage.get('sessionStoragekey');//1
+	console.log(sessionStorage.sessionStoragekey)//1
+
+	//localStorage
+	var storage = new StorageUtil('localStorage');
+
+	storage.set('localStoragekey',1);
+	storage.get('localStoragekey');//1
+	console.log(localStorage.localStoragekey)//1
+
+	//cookie
+	var storage = new StorageUtil('cookie'),
+		time = 5 * 60 * 60 * 1000; //5小时，默认2小时
+
+	storage.set('cookiekey',1,time);
+	console.log(storage.get('cookiekey'));//1
+	</pre>
+	<h4>链式调用</h4>
+	<pre>
+	set/remove方法支持
+	console.log(new StorageUtil().set('key1',1).set('key2',2).remove('key1').get('key2'));//2
+	</pre>
+	<h4>直接存储对象</h4>
+	<pre>
+	//sessionStorage/localStorage/cookie
+	new StorageUtil().set('obj',{'test':1}).get('obj')//{test: 1}
+	new StorageUtil('localStorage').set('obj',{'test':1}).get('obj')//{test: 1}
+	new StorageUtil('cookie').set('obj',{'test':1}).get('obj')//{test: 1}
+	</pre>
+	<script src="storage.js"></script>
+	<script>
+		new StorageUtil().set('msg','hello world').setType('localStorage').set('msg','hello world').setType('cookie').set('msg','hello world');
+	</script>
+</body>
+</html>
