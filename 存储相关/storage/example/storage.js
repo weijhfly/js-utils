@@ -16,7 +16,7 @@
     StorageUtil.prototype = {
         constructor: StorageUtil,
         isSupport: function() {
-            return this.isCookie ? document.cookie && navigator.cookieEnabled: typeof window[this.type] != 'undefined';
+            return this.isCookie() ? document.cookie && navigator.cookieEnabled : typeof window[this.type] != 'undefined';
         },
         get: function(key,callback) {
             try {
@@ -65,7 +65,7 @@
             return this;
         },
         setType:function(type){
-            this.type = type;
+            this.type = type || 'sessionStorage';
 
             return this;
         },
