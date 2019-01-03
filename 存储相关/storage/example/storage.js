@@ -1,3 +1,6 @@
+/*!
+ * github: https://github.com/weijhfly/js-utils
+*/
 ;(function() {
     'use strict';
 

@@ -1,11 +1,20 @@
 {
-  "name": "storage",
+  "name": "storage-util",
   "version": "1.0.0",
-  "description": "",
-  "main": "storage.js",
+  "description": "整合sessionStorage、localStorage、cookie的工具插件",
+  "main": "example/storage.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "gulp server"
+  },
+   "keywords": [
+    "sessionStorage",
+    "localStorage",
+	"cookie"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/weijhfly/js-utils"
   },
   "author": "",
   "license": "ISC",
