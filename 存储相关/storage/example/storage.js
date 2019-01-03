@@ -12,8 +12,6 @@
         this.type = type ? type: 'sessionStorage';
         this.success = typeof callback === 'object' ? callback.success: function(){};
         this.fail = typeof callback === 'object' ? callback.fail: function(){};
-
-        return this;
     }
 
     StorageUtil.prototype = {
@@ -44,7 +42,7 @@
                 if(typeof key != 'object'){
                     obj[key] = value;
                 }else{
-                    var time = value;
+                    time = value;
 
                     obj = key;
                 }
@@ -120,12 +118,12 @@
             }
             function remove(key){
                 if(isCookie){
-                    var exp = new Date(),
+                    var date = new Date(),
                         value = _this.get(key);
 
-                    exp.setTime(exp.getTime() - 1);
+                    date.setTime(date.getTime() - 1);
 
-                    if (value != null) document.cookie = key + "=" + value + ";expires=" + exp.toGMTString();
+                    if (value != null) document.cookie = key + "=" + value + ";expires=" + date.toGMTString();
                 }else{
                     delete window[_this.type][key];
                 }
