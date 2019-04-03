@@ -16,8 +16,8 @@
     "type": "git",
     "url": "https://github.com/weijhfly/js-utils"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "weijhfly",
+  "license": "MIT",
   "devDependencies": {
     "browser-sync": "^2.26.3",
     "gulp": "^4.0.0"
