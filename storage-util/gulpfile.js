@@ -9,7 +9,6 @@ var source = require('vinyl-source-stream');
 var replaceName = require('gulp-replace-name');
 var header = require('gulp-header');
 var browserSync = require('browser-sync').create();
-var banner = header('/*! \n <%= pkg.name %> v<%= pkg.version %>\n <%= pkg.description %> \n License: <%= pkg.license %>\n <%= pkg.repository.url %> By <%= pkg.author %>\n */\n ;', {pkg: pkg});
 
 // ES6转化为ES5
 gulp.task("build", function () {
@@ -18,10 +17,10 @@ gulp.task("build", function () {
     .bundle()
     .pipe(source('main.js'))
     .pipe(rename('storage-util.js'))
-    .pipe(banner)
+    .pipe(header('/*! \n <%= pkg.name %> v<%= pkg.version %>\n <%= pkg.description %> \n License: <%= pkg.license %>\n <%= pkg.repository.url %> By <%= pkg.author %>\n */\n ;', {pkg: pkg}))
     .pipe(gulp.dest('./dist'))
     .pipe(streamify(uglify()))
-    .pipe(banner)
+    .pipe(header('/*! <%= pkg.name %> v<%= pkg.version %> <%= pkg.description %> License: <%= pkg.license %> <%= pkg.repository.url %> By <%= pkg.author %> */ ;', {pkg: pkg}))
     .pipe(streamify(replaceName(/\.js/g, '.min.js')))
     .pipe(gulp.dest('./dist'))
 });

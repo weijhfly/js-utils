@@ -1,5 +1,5 @@
 /*! 
- storage-util v1.0.1
+ storage-util v1.0.2
  整合sessionStorage、localStorage、cookie的小插件 
  License: MIT
  https://github.com/weijhfly/js-utils By weijhfly
