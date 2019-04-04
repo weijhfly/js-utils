@@ -1,0 +1,36 @@
+# md5-util [![npm](https://img.shields.io/npm/v/md5-util.svg)](https://www.npmjs.com/package/md5-util) 
+>拓展spark-md5，支持计算网络文件md5的小插件。
+
+### 安装
+```js
+npm install md5-util --save
+```
+
+### 使用方式
+
+#### 计算本地文件md5
+```js
+SparkMD5.file(file,function(md5){
+  //如果文件读取失败，md5为null
+  console.log(md5)
+})
+```
+
+#### 计算网络文件md5
+```js
+SparkMD5.file(url,function(md5){
+  //跨域、网络请求、文件读取失败等，md5为null
+  console.log(md5)
+})
+```
+
+#### SparkMD5官方示例
+```js
+SparkMD5.hash('hello world')
+//"5eb63bbbe01eeed093cb22bb8f5acdc3"
+```
+更多官方示例查看[SparkMD5](https://github.com/satazor/js-spark-md5)  
+
+### License
+
+MIT

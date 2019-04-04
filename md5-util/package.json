@@ -1,15 +1,15 @@
 {
-  "name": "storage-util",
-  "version": "1.0.2",
-  "description": "整合sessionStorage、localStorage、cookie的小插件",
-  "main": "dist/storage-util.min.js",
+  "name": "md5-util",
+  "version": "1.0.0",
+  "description": "拓展spark-md5，支持计算网络文件md5的小插件",
+  "main": "dist/md5-util.min.js",
   "scripts": {
     "start": "gulp default"
   },
   "keywords": [
-    "sessionStorage",
-    "localStorage",
-    "cookie"
+    "md5",
+    "spark-md5",
+    "js-md5"
   ],
   "repository": {
     "type": "git",
@@ -28,5 +28,8 @@
     "gulp-streamify": "^1.0.2",
     "gulp-uglify": "^3.0.2",
     "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "spark-md5": "^3.0.0"
   }
 }

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=0" />
+	<title>demo</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	
+</head>
+<body>
+	<div class="container">
+		<h3>md5-util 拓展spark-md5，支持计算网络文件md5的小插件</h3>
+		<div style="height: 5px;"></div>
+		<hr>
+		<h4><strong>计算本地文件md5</strong></h4>
+<pre>
+SparkMD5.file(file,function(md5){
+  //如果文件读取失败，md5为null
+  console.log(md5)
+})
+</pre>
+		<br>
+		<input type="file" id="file">
+		<br>
+		<div>返回结果：<span id="md51"></span></div>
+		<br>
+		<hr>
+		<h4><strong>计算网络文件md5</strong></h4>
+<pre>
+//这里浏览器兼容性未知
+SparkMD5.file(url,function(md5){
+  //跨域、网络请求、文件读取失败等，md5为null
+  console.log(md5)
+})
+</pre>
+		<br>
+		<input type="text" id="file2" style="width: 60%;" placeholder="输入文件url"value="https://weijhfly.github.io/favicon.ico"> <button type="button" class="btn btn-sm btn-warning">确定</button>
+		<br>
+		<br>
+		<div>返回结果：<span id="md52"></span></div>
+		<br>
+		<hr>
+		<h4><strong>SparkMD5官方示例</strong></h4>
+<pre>
+SparkMD5.hash('hello world')
+//"5eb63bbbe01eeed093cb22bb8f5acdc3"
+</pre>
+		更多官方示例查看<a href="https://github.com/satazor/js-spark-md5">SparkMD5</a>
+		<br>
+		<br>
+		<br>
+	</div>
+	<script src="md5-util.min.js"></script>
+	<script>
+		//本地文件
+		document.querySelector('#file').addEventListener('change', function () {
+
+			SparkMD5.file(this.files[0],function(md5){
+				document.getElementById('md51').innerHTML = md5;
+			})
+		});
+		//网络
+		document.querySelector('.btn').addEventListener('click', function () {
+
+			var value = document.querySelector('#file2').value;
+
+			if(value){
+				SparkMD5.file(value,function(md5){
+					if(!md5){
+						alert('计算失败');
+						return false;
+					}
+					document.getElementById('md52').innerHTML = md5;
+				})
+			}
+		});
+		setTimeout(function() {
+			document.querySelector('.btn').click();
+		}, 1000);
+	</script>
+</body>
+</html>

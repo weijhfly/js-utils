@@ -5,3 +5,7 @@
 **一个整合sessionStorage、localStorage、cookie的小插件**   
 插件路径：[js-utils>storage-util](https://github.com/weijhfly/js-utils/tree/master/storage-util)  
 参考文章：[整理前端工作中的可复用代码（一）：做一个整合存储的插件](https://blog.csdn.net/qq_32262127/article/details/85496516)  
+
+## md5-util [![npm](https://img.shields.io/npm/v/md5-util.svg)](https://www.npmjs.com/package/md5-util)   
+**拓展spark-md5，支持计算网络文件md5的小插件**   
+插件路径：[js-utils>md5-util](https://github.com/weijhfly/js-utils/tree/master/md5-util)  

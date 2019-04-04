@@ -14,7 +14,7 @@ gulp.task("build", function () {
   return browserify('./src/index.js')
     .transform(babelify, { presets: ['es2015'] })
     .bundle()
-    .pipe(source('storage-util.js'))
+    .pipe(source('md5-util.js'))
     .pipe(header('/*! \n <%= pkg.name %> v<%= pkg.version %>\n <%= pkg.description %> \n License: <%= pkg.license %>\n <%= pkg.repository.url %> By <%= pkg.author %>\n */\n ;', {pkg: pkg}))
     .pipe(gulp.dest('./dist'))
     .pipe(streamify(uglify()))

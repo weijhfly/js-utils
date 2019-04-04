@@ -17,10 +17,6 @@ var StorageUtil = function () {
 	function StorageUtil(type, callback) {
 		_classCallCheck(this, StorageUtil);
 
-		if (!(this instanceof StorageUtil)) {
-			return new StorageUtil(type, callback);
-		}
-
 		this.type = type ? type : 'sessionStorage';
 		this.success = (typeof callback === 'undefined' ? 'undefined' : _typeof(callback)) === 'object' ? callback.success : function () {};
 		this.fail = (typeof callback === 'undefined' ? 'undefined' : _typeof(callback)) === 'object' ? callback.fail : function () {};

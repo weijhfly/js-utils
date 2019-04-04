@@ -1,9 +1,5 @@
 class StorageUtil {
 	constructor(type, callback) {
-		if (! (this instanceof StorageUtil)) {
-            return new StorageUtil(type, callback);
-        }
-
         this.type = type ? type: 'sessionStorage';
         this.success = typeof callback === 'object' ? callback.success: function(){};
         this.fail = typeof callback === 'object' ? callback.fail: function(){};
