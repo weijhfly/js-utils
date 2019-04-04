@@ -9,7 +9,7 @@
 	</style>
 </head>
 <body>
-	<h3>整合操作sessionStorage、localStorage、cookie的小工具(支持umd)</h3>
+	<h3>整合操作sessionStorage、localStorage、cookie的小插件</h3>
 	<hr>
 	<h3>参数说明</h3>
 	<pre>
@@ -109,7 +109,7 @@
 		console.log(key3,key4);
 	}).remove('key3,key4');
 	</pre>
-	<script src="storage.js"></script>
+	<script src="storage-util.min.js"></script>
 	<script>
 		new StorageUtil().set('msg','你翩翩地路过，').get('msg',function(msg){
 			console.log(msg);
