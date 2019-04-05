@@ -4,11 +4,12 @@
 ## storage-util [![npm](https://img.shields.io/npm/v/storage-util.svg)](https://www.npmjs.com/package/storage-util)
 **一个整合sessionStorage、localStorage、cookie的小插件**   
 插件路径：[js-utils>storage-util](https://github.com/weijhfly/js-utils/tree/master/storage-util)  
-参考文章：[整理前端工作中的可复用代码（一）：做一个整合存储的插件](https://blog.csdn.net/qq_32262127/article/details/85496516)  
+参考文章：[整理前端工作中的可复用代码（一）：做一个整合存储的插件](https://juejin.im/post/5c2a748ae51d4541d8075c3a)  
 <br>
 ## md5-util [![npm](https://img.shields.io/npm/v/md5-util.svg)](https://www.npmjs.com/package/md5-util)   
 **拓展spark-md5，支持计算网络文件md5的小插件**   
 插件路径：[js-utils>md5-util](https://github.com/weijhfly/js-utils/tree/master/md5-util)  
+参考文章：[整理前端工作中的可复用代码（二）：拓展spark-md5，支持计算网络文件md5](https://juejin.im/post/5ca74e9f6fb9a05e437b909f)  
 #### 演示
 [md5-util](https://weijhfly.github.io/md5-util.html "md5-util")(下方直接扫码即可体验)  
 
