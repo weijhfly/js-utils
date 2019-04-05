@@ -1,6 +1,6 @@
 {
   "name": "md5-util",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "拓展spark-md5，支持计算网络文件md5的小插件",
   "main": "dist/md5-util.min.js",
   "scripts": {

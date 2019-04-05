@@ -1,5 +1,5 @@
 /*! 
- md5-util v1.0.0
+ md5-util v1.0.1
  拓展spark-md5，支持计算网络文件md5的小插件 
  License: MIT
  https://github.com/weijhfly/js-utils By weijhfly
