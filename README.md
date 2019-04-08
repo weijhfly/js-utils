@@ -13,4 +13,8 @@
 #### 演示
 [md5-util](https://weijhfly.github.io/md5-util.html "md5-util")(下方直接扫码即可体验)  
 
-![rolldate](https://weijhfly.github.io/images/md5-util.png)
+![rolldate](https://weijhfly.github.io/images/md5-util.png)   
+
+## gulp-util
+**配置gulp，实现自动刷新+编译less+补全css前缀+px转rem，方便写纯静态页**   
+插件路径：[js-utils>gulp-util](https://github.com/weijhfly/js-utils/tree/master/gulp-util)  
