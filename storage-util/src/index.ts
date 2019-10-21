@@ -1,4 +1,8 @@
 class StorageUtil {
+	type: string;
+	success: Function;
+	fail: Function;
+
 	constructor(type, callback) {
         this.type = type ? type: 'sessionStorage';
         this.success = typeof callback === 'object' ? callback.success: function(){};
@@ -9,7 +13,7 @@ class StorageUtil {
 		return this.isCookie() ? document.cookie && navigator.cookieEnabled : typeof window[this.type] != 'undefined';
 	}
 
-	get(key,callback) {
+	get(key,callback?) {
 		try {
 			var obj = key.split(','),
 				res = this.master(obj,'get');
@@ -64,7 +68,7 @@ class StorageUtil {
 		return this;
 	}
 
-	master (obj,flag,time){
+	master (obj,flag,time?){
 		var result = [],
 		isCookie = this.isCookie(),
 		_this = this;
@@ -105,7 +109,7 @@ class StorageUtil {
 				var date = new Date();
 
 				date.setTime(date.getTime() + time);
-				document.cookie = key + "=" + escape(value) + ";expires=" + date.toGMTString();
+				document.cookie = key + "=" + escape(value) + ";expires=" + date.toUTCString();
 			}else{
 				window[_this.type][key] = value;
 			}
@@ -117,7 +121,7 @@ class StorageUtil {
 
 				date.setTime(date.getTime() - 1);
 
-				if (value != null) document.cookie = key + "=" + value + ";expires=" + date.toGMTString();
+				if (value != null) document.cookie = key + "=" + value + ";expires=" + date.toUTCString();
 			}else{
 				delete window[_this.type][key];
 			}
@@ -138,12 +142,4 @@ class StorageUtil {
 		return this.type === 'cookie';
 	}
 }
-if (typeof define === 'function' && define.amd) {
-	define(function() {
-		return StorageUtil;
-	});
-} else if(typeof window === "object"){
-	window.StorageUtil = StorageUtil;
-} else if (typeof exports === "object") {
-	module.exports = StorageUtil;
-}
+export default StorageUtil;
