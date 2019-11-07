@@ -1,5 +1,5 @@
 /**
- * storage-util v1.0.3
+ * storage-util v1.0.4
  * (c) 2019-2019 weijhfly https://github.com/weijhfly/js-utils
  * Licensed under MIT
  */
@@ -8,13 +8,13 @@
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
 	(global = global || self, global.StorageUtil = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
 	var StorageUtil = /** @class */ (function () {
 	    function StorageUtil(type, callback) {
-	        this.type = type ? type : 'sessionStorage';
 	        this.success = typeof callback === 'object' ? callback.success : function () { };
 	        this.fail = typeof callback === 'object' ? callback.fail : function () { };
+	        this.setType(type);
 	    }
 	    StorageUtil.prototype.isSupport = function () {
 	        return this.isCookie() ? document.cookie && navigator.cookieEnabled : typeof window[this.type] != 'undefined';
@@ -65,7 +65,9 @@
 	        return this;
 	    };
 	    StorageUtil.prototype.setType = function (type) {
-	        this.type = type || 'sessionStorage';
+	        type = type ? type : 0;
+	        var types = ['sessionStorage', 'localStorage', 'cookie'];
+	        this.type = types[type] || type;
 	        return this;
 	    };
 	    StorageUtil.prototype.master = function (obj, flag, time) {
@@ -138,4 +140,4 @@
 
 	return StorageUtil;
 
-}));
+})));

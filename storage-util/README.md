@@ -11,7 +11,7 @@ npm install storage-util --save
 #### 相关参数
 ```js
 /*
-  type: 可选 值->sessionStorage、localStorage、cookie之一，默认sessionStorage
+  type: 可选 值->sessionStorage(0)、localStorage(1)、cookie(2)之一，默认sessionStorage(0)
   success: 可选 设置成功后的回调，注意要放在对象里，下同
   fail: 可选 设置失败后的回调
   
@@ -35,8 +35,9 @@ var storage = new StorageUtil(type,{
 注意：在兼容性方面，工具并不会自动降级处理，如果需要，可以在回调函数中做相关操作
 ```js
 new StorageUtil().isSupport();//sessionStorage
-new StorageUtil('localStorage').isSupport();//localStorage
-new StorageUtil('cookie').isSupport();//cookie
+// new StorageUtil('localStorage').isSupport(); 
+new StorageUtil(1).isSupport();//localStorage
+new StorageUtil(2).isSupport();//cookie
 ```
 #### 增删改查  
 设置cookie略有不同，可选设置时间
@@ -49,14 +50,14 @@ storage.get('sessionStoragekey');//1
 console.log(sessionStorage.sessionStoragekey)//1
 
 //localStorage
-var storage = new StorageUtil('localStorage');
+var storage = new StorageUtil(1);
 
 storage.set('localStoragekey',1);
 storage.get('localStoragekey');//1
 console.log(localStorage.localStoragekey)//1
 
 //cookie
-var storage = new StorageUtil('cookie'),
+var storage = new StorageUtil(2),
     time = 5 * 60 * 60 * 1000; //5小时，默认2小时
 
 storage.set('cookiekey',1,time);
@@ -73,8 +74,8 @@ console.log(new StorageUtil().set('key1',1).set('key2',2).remove('key1').get('ke
 ```js
 //sessionStorage/localStorage/cookie
 new StorageUtil().set('obj',{'test':1}).get('obj')//{test: 1}
-new StorageUtil('localStorage').set('obj',{'test':1}).get('obj')//{test: 1}
-new StorageUtil('cookie').set('obj',{'test':1}).get('obj')//{test: 1}
+new StorageUtil(1).set('obj',{'test':1}).get('obj')//{test: 1}
+new StorageUtil(2).set('obj',{'test':1}).get('obj')//{test: 1}
 ```
 #### 批量操作  
 批量设置cookie时，time参数往前移一位
@@ -86,29 +87,29 @@ new StorageUtil().set({ke1:1,key2:2});
 //批量set cookie time 可选
 var time = 5 * 60 * 60 * 1000;
 
-new StorageUtil('cookie').set({ke1:1,key2:2},time);
+new StorageUtil(2).set({ke1:1,key2:2},time);
 //批量删除 sessionStorage/localStorage/cookie
 new StorageUtil().remove('key1,key2');
 ```
 #### 变换type  
 只需一行代码，就可以玩转三个存储对象
 ```js
-new StorageUtil().set('key1',1).setType('localStorage').set('key2',2).
-	.setType('cookie').set('key3',3)
+new StorageUtil().set('key1',1).setType(1).set('key2',2).
+	.setType(2).set('key3',3)
 ```
 #### 无限链式  
 ```js
 new StorageUtil().set('msg','你翩翩地路过，').get('msg',function(msg){
     console.log(msg);
-  }).setType('localStorage').set('msg','以为不曾留下什么，').get('msg',function(msg){
+  }).setType(1).set('msg','以为不曾留下什么，').get('msg',function(msg){
     console.log(msg);
-  }).setType('cookie').set('msg','却在我心里有了思念，').get('msg',function(msg){
+  }).setType(2).set('msg','却在我心里有了思念，').get('msg',function(msg){
     console.log(msg);
   }).setType('sessionStorage').set('msg','若你还记得，').get('msg',function(msg){
     console.log(msg);
-  }).setType('localStorage').set('msg','那个蝉鸣的夏天，').get('msg',function(msg){
+  }).setType(1).set('msg','那个蝉鸣的夏天，').get('msg',function(msg){
     console.log(msg);
-  }).setType('cookie').set('msg','有一个你，也有一个我。').get('msg',function(msg){
+  }).setType(2).set('msg','有一个你，也有一个我。').get('msg',function(msg){
     console.log(msg);
   })
 

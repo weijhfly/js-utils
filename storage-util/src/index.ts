@@ -4,9 +4,9 @@ class StorageUtil {
 	fail: Function;
 
 	constructor(type, callback) {
-        this.type = type ? type: 'sessionStorage';
         this.success = typeof callback === 'object' ? callback.success: function(){};
         this.fail = typeof callback === 'object' ? callback.fail: function(){};
+        this.setType(type);
 	}
 
 	isSupport() {
@@ -63,8 +63,11 @@ class StorageUtil {
 	}
 
 	setType (type){
-		this.type = type || 'sessionStorage';
+		type = type? type : 0;
 
+		let types = ['sessionStorage','localStorage','cookie'];
+
+		this.type = types[type] || type;
 		return this;
 	}
 

@@ -13,7 +13,7 @@
 	<hr>
 	<h3>参数说明</h3>
 	<pre>
-	type: 可选 值->sessionStorage、localStorage、cookie之一，默认sessionStorage
+	type: 可选 值->sessionStorage(0)、localStorage(1)、cookie(2)之一，默认sessionStorage(0)
 	success: 可选 设置成功后的回调，注意要放在对象里，下同
 	fail: 可选 设置失败后的回调
 
@@ -37,8 +37,9 @@
 	<pre>
 	//判断是否支持,工具已做容错处理，即使客户端不支持，也不会因报错导致页面崩溃，只是无法设置成功，获取值时为null
 	new StorageUtil().isSupport();//sessionStorage
-	new StorageUtil('localStorage').isSupport();//localStorage
-	new StorageUtil('cookie').isSupport();//cookie
+	// new StorageUtil('localStorage').isSupport(); 
+	new StorageUtil(1).isSupport();//localStorage
+	new StorageUtil(2).isSupport();//cookie
 
 
 	//sessionStorage
@@ -49,14 +50,14 @@
 	console.log(sessionStorage.sessionStoragekey)//1
 
 	//localStorage
-	var storage = new StorageUtil('localStorage');
+	var storage = new StorageUtil(1);
 
 	storage.set('localStoragekey',1);
 	storage.get('localStoragekey');//1
 	console.log(localStorage.localStoragekey)//1
 
 	//cookie
-	var storage = new StorageUtil('cookie'),
+	var storage = new StorageUtil(2),
 		time = 5 * 60 * 60 * 1000; //5小时，默认2小时
 
 	storage.set('cookiekey',1,time);
@@ -71,22 +72,22 @@
 	<pre>
 	//sessionStorage/localStorage/cookie
 	new StorageUtil().set('obj',{'test':1}).get('obj')//{test: 1}
-	new StorageUtil('localStorage').set('obj',{'test':1}).get('obj')//{test: 1}
-	new StorageUtil('cookie').set('obj',{'test':1}).get('obj')//{test: 1}
+	new StorageUtil(1).set('obj',{'test':1}).get('obj')//{test: 1}
+	new StorageUtil(2).set('obj',{'test':1}).get('obj')//{test: 1}
 	</pre>
 	<h4>无限链式</h4>
 	<pre>
 	new StorageUtil().set('msg','你翩翩地路过，').get('msg',function(msg){
 		console.log(msg);
-	}).setType('localStorage').set('msg','以为不曾留下什么，').get('msg',function(msg){
+	}).setType(1).set('msg','以为不曾留下什么，').get('msg',function(msg){
 		console.log(msg);
-	}).setType('cookie').set('msg','却在我心里有了思念，').get('msg',function(msg){
+	}).setType(2).set('msg','却在我心里有了思念，').get('msg',function(msg){
 		console.log(msg);
 	}).setType().set('msg','若你还记得，').get('msg',function(msg){
 		console.log(msg);
-	}).setType('localStorage').set('msg','那个蝉鸣的夏天，').get('msg',function(msg){
+	}).setType(1).set('msg','那个蝉鸣的夏天，').get('msg',function(msg){
 		console.log(msg);
-	}).setType('cookie').set('msg','有一个你，也有一个我。').get('msg',function(msg){
+	}).setType(2).set('msg','有一个你，也有一个我。').get('msg',function(msg){
 		console.log(msg);
 	})
 	</pre>
@@ -113,15 +114,15 @@
 		window.onload = () => {
 			new StorageUtil().set('msg','你翩翩地路过，').get('msg',function(msg){
 				console.log(msg);
-			}).setType('localStorage').set('msg','以为不曾留下什么，').get('msg',function(msg){
+			}).setType(1).set('msg','以为不曾留下什么，').get('msg',function(msg){
 				console.log(msg);
-			}).setType('cookie').set('msg','却在我心里有了思念，').get('msg',function(msg){
+			}).setType(2).set('msg','却在我心里有了思念，').get('msg',function(msg){
 				console.log(msg);
 			}).setType().set('msg','若你还记得，').get('msg',function(msg){
 				console.log(msg);
-			}).setType('localStorage').set('msg','那个蝉鸣的夏天，').get('msg',function(msg){
+			}).setType(1).set('msg','那个蝉鸣的夏天，').get('msg',function(msg){
 				console.log(msg);
-			}).setType('cookie').set('msg','有一个你，也有一个我。').get('msg',function(msg){
+			}).setType(2).set('msg','有一个你，也有一个我。').get('msg',function(msg){
 				console.log(msg);
 			})
 		}
