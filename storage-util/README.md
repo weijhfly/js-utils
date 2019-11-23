@@ -47,14 +47,14 @@ var storage = new StorageUtil();
 
 storage.set('sessionStoragekey',1);
 storage.get('sessionStoragekey');//1
-console.log(sessionStorage.sessionStoragekey)//1
+sessionStorage.sessionStoragekey//1
 
 //localStorage
 var storage = new StorageUtil(1);
 
 storage.set('localStoragekey',1);
 storage.get('localStoragekey');//1
-console.log(localStorage.localStoragekey)//1
+localStorage.localStoragekey//1
 
 //cookie
 var storage = new StorageUtil(2),
@@ -67,7 +67,7 @@ console.log(storage.get('cookiekey'));//1
 由于get为取值操作，这里的链式操作只能是set或remove
 ```js
 //set/remove
-console.log(new StorageUtil().set('key1',1).set('key2',2).remove('key1').get('key2'));//2
+new StorageUtil().set('key1',1).set('key2',2).remove('key1').get('key2');//2
 ```
 #### 直接存储对象  
 无需手动转换对象数据
@@ -105,7 +105,7 @@ new StorageUtil().set('msg','你翩翩地路过，').get('msg',function(msg){
     console.log(msg);
   }).setType(2).set('msg','却在我心里有了思念，').get('msg',function(msg){
     console.log(msg);
-  }).setType('sessionStorage').set('msg','若你还记得，').get('msg',function(msg){
+  }).setType().set('msg','若你还记得，').get('msg',function(msg){
     console.log(msg);
   }).setType(1).set('msg','那个蝉鸣的夏天，').get('msg',function(msg){
     console.log(msg);
