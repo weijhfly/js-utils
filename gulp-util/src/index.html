@@ -6,26 +6,16 @@
 <meta content="telephone=no" name="format-detection" />
 <title>gulp工具测试</title>
 <link rel="stylesheet" href="css/test.css">
-<script>
-function rem(){
-		var deviceWidth = document.documentElement.clientWidth,
-			html = document.documentElement;
-
-		if(deviceWidth > 1024){
-			deviceWidth = 1024;
-			html.style.maxWidth = '1024px';
-			html.style.margin = '0 auto';
-		}
-		html.style.fontSize = deviceWidth / 7.5 + 'px';
-	}
-	rem();
-	window.addEventListener("resize", function() {
-	  rem();
-	}, false);
-</script>
+<script src="js/rem.js"></script>
 </head>
 <body>
 	<h1>gulp工具测试</h1>
 	<h2>测试测测</h2>
+
+	<pre>既然选择了远方，便只顾风雨兼程</pre>
+
+	<img src="images/img.png" alt="">
+
+	<div class="img"></div>
 </body>
 </html>
