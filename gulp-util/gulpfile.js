@@ -40,9 +40,9 @@ const revdel = require('gulp-rev-delete-original');
  */
 gulp.task('server', done => {
     connect.server({
-    root:'dist',//根目录
-    livereload:true,//自动更新
-    port:9090//端口
+        root: 'dist',//根目录
+        livereload: true,//自动更新
+        port: 9090//端口
     })
     done();
 });
@@ -53,10 +53,10 @@ gulp.task('clean', function () {
 });
 
 
-gulp.task('html',function(){
+gulp.task('html', function () {
     return gulp.src('src/*.html')
-    .pipe(gulp.dest('dist'))
-    .pipe(connect.reload())
+        .pipe(gulp.dest('dist'))
+        .pipe(connect.reload())
 })
 
 /**
@@ -83,24 +83,24 @@ gulp.task('css', done => {
     done();
 });
 
-gulp.task('js', function(){
+gulp.task('js', function () {
     return gulp.src('src/js/**/*.js')
-    //.pipe(jshint())//检查代码
-    .pipe(babel({//编译ES6
-        presets: ['@babel/env']
-    }))
-    .pipe(uglify())//压缩js
-    .pipe(gulp.dest('dist/js'))
-    .pipe(connect.reload())
+        //.pipe(jshint())//检查代码
+        .pipe(babel({//编译ES6
+            presets: ['@babel/env']
+        }))
+        .pipe(uglify())//压缩js
+        .pipe(gulp.dest('dist/js'))
+        .pipe(connect.reload())
 })
 
 /**
  * 压缩图片
  */
-gulp.task('images', function(){
+gulp.task('images', function () {
     return gulp.src('src/images/**/*.+(png|jpg|jpeg|gif|svg)')
-    .pipe(imagemin())
-    .pipe(gulp.dest('dist/images'))
+        .pipe(imagemin())
+        .pipe(gulp.dest('dist/images'))
 });
 
 /**
@@ -115,28 +115,28 @@ gulp.task("hash", done => {
             })
         )
         .pipe(revdel({
-          exclude: function(file) {
-            if (/\.html$/.test(file.name)) {
-              return true; //if you want to exclude the file from being deleted
+            exclude: function (file) {
+                if (/\.html$/.test(file.name)) {
+                    return true; //if you want to exclude the file from being deleted
+                }
             }
-          }
         }))
         .pipe(gulp.dest("dist"))
 
     done();
 });
 
-gulp.task('watcher',done => { //监听变化
-    gulp.watch('src/*.html',gulp.series('html'));
-    gulp.watch('src/less/**/*.less',gulp.series('css'));
-    gulp.watch('src/js/**/*.js',gulp.series('js'));
-    gulp.watch('src/images/**/*',gulp.series('images'));
+gulp.task('watcher', done => { //监听变化
+    gulp.watch('src/*.html', gulp.series('html'));
+    gulp.watch('src/less/**/*.less', gulp.series('css'));
+    gulp.watch('src/js/**/*.js', gulp.series('js'));
+    gulp.watch('src/images/**/*', gulp.series('images'));
 
     done();
 })
 
 // 初始化
-gulp.task('init',gulp.series('clean',gulp.parallel('html','css','js','images')));
+gulp.task('init', gulp.series('clean', gulp.parallel('html', 'css', 'js', 'images')));
 
 // 开发
 gulp.task('default', gulp.series('init', 'server', 'watcher'));
