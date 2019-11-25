@@ -17,20 +17,23 @@
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
-    "browser-sync": "^2.24.4",
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.2.0",
+    "gulp-connect": "^5.7.0",
     "gulp-htmlmin": "^5.0.1",
     "gulp-if": "^3.0.0",
     "gulp-imagemin": "^6.2.0",
+    "gulp-jshint": "^2.1.0",
     "gulp-less": "^4.0.1",
     "gulp-postcss": "^8.0.0",
     "gulp-rev-all": "^2.0.2",
+    "gulp-rev-delete-original": "^0.2.3",
     "gulp-uglify": "^3.0.2",
     "gulp-util": "^3.0.8",
+    "jshint": "^2.10.3",
     "postcss-px2rem": "^0.3.0"
   }
 }

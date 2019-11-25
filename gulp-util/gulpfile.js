@@ -1,8 +1,6 @@
 //加载gulp模块
 const gulp = require('gulp');
-//加载browser-sync模块
-const browserSync = require('browser-sync').create();
-const reload = browserSync.reload;
+
 //加载less模块
 const less = require('gulp-less');
 //补全css前缀
@@ -20,7 +18,7 @@ const RevAll = require("gulp-rev-all");
 
 const babel = require('gulp-babel');
 
-const gulpIf = require('gulp-if');
+//const gulpIf = require('gulp-if');
 
 const del = require('del');
 
@@ -31,27 +29,40 @@ const minifyCss = require('gulp-clean-css');
 
 const htmlmin = require('gulp-htmlmin');
 
+const jshint = require('gulp-jshint');
+
+const connect = require('gulp-connect');
+
+const revdel = require('gulp-rev-delete-original');
+
 /**
- * 这里静态服务器 + 监听 html/css/less等文件
+ * 静态服务器
  */
 gulp.task('server', done => {
-    browserSync.init({
-        server: 'src', //这里指的是根目录，如果你的index.html在根目录下，会直接打开index页面，不然会显示Get Not，自己写路径就行
-        port: 8081,  //默认打开localhost:3000,现在改成localhost:8081
-        open: false
-    });
-    //监听文件
-    gulp.watch('src/less/**/*.less', gulp.series('less'));
-    gulp.watch('src/css/**/*.css').on('change', reload);
-    gulp.watch('src/js/**/*.js').on('change', reload);
-    gulp.watch('src/**/*.html').on('change', reload);
+    connect.server({
+    root:'dist',//根目录
+    livereload:true,//自动更新
+    port:9090//端口
+    })
     done();
 });
+
+// 清空dist目录
+gulp.task('clean', function () {
+    return del(['dist']);
+});
+
+
+gulp.task('html',function(){
+    return gulp.src('src/*.html')
+    .pipe(gulp.dest('dist'))
+    .pipe(connect.reload())
+})
 
 /**
  * 编译less
  */
-gulp.task('less', done => {
+gulp.task('css', done => {
     var processors = [px2rem({ remUnit: 100 })];
 
     gulp.src('src/less/**/*.less')   //获取所有less文件路径
@@ -66,56 +77,69 @@ gulp.task('less', done => {
             ]
         }))
         .pipe(postcss(processors))//px转rem tips: 如果某个px不转换，可使用大写代替，类似1PX
-        .pipe(gulp.dest('src/css'));  //输出CSS文件路径
+        .pipe(gulp.dest('dist/css'))
+        .pipe(connect.reload())
+
     done();
 });
-// 清空dist目录
-gulp.task('clean', function () {
-    return del(['dist']);
-});
 
-let isImage = function (file) {
-    if (file.history[0].match(/\.jpg|\.jpeg|\.png/i)) {
-        return true;
-    } else {
-        return false;
-    }
-}
+gulp.task('js', function(){
+    return gulp.src('src/js/**/*.js')
+    //.pipe(jshint())//检查代码
+    .pipe(babel({//编译ES6
+        presets: ['@babel/env']
+    }))
+    .pipe(uglify())//压缩js
+    .pipe(gulp.dest('dist/js'))
+    .pipe(connect.reload())
+})
+
+/**
+ * 压缩图片
+ */
+gulp.task('images', function(){
+    return gulp.src('src/images/**/*.+(png|jpg|jpeg|gif|svg)')
+    .pipe(imagemin())
+    .pipe(gulp.dest('dist/images'))
+});
 
 /**
  * hash
  */
 gulp.task("hash", done => {
     gulp
-        .src("src/**")
-        .pipe(
-            gulpIf('*.js', babel({
-                presets: ['@babel/env']
-            }))
-        )
-        .pipe(
-            gulpIf('*.js', uglify())
-        )
-        .pipe(
-            gulpIf('*.css', minifyCss())
-        )
-        .pipe(
-            gulpIf('*.html', htmlmin({ collapseWhitespace: true }))
-        )
-        .pipe(
-            gulpIf(isImage, imagemin())
-        )
+        .src("dist/**")
         .pipe(
             RevAll.revision({
-                dontRenameFile: [/\.html$/, /\.less$/]
+                dontRenameFile: [/\.html$/]
             })
         )
+        .pipe(revdel({
+          exclude: function(file) {
+            if (/\.html$/.test(file.name)) {
+              return true; //if you want to exclude the file from being deleted
+            }
+          }
+        }))
         .pipe(gulp.dest("dist"))
 
     done();
 });
 
+gulp.task('watcher',done => { //监听变化
+    gulp.watch('src/*.html',gulp.series('html'));
+    gulp.watch('src/less/**/*.less',gulp.series('css'));
+    gulp.watch('src/js/**/*.js',gulp.series('js'));
+    gulp.watch('src/images/**/*',gulp.series('images'));
+
+    done();
+})
+
+// 初始化
+gulp.task('init',gulp.series('clean',gulp.parallel('html','css','js','images')));
+
 // 开发
-gulp.task('default', gulp.parallel('server', 'less'));
+gulp.task('default', gulp.series('init', 'server', 'watcher'));
+
 // 打包
-gulp.task('build', gulp.series('clean', gulp.parallel('hash')));
+gulp.task('build', gulp.series('hash'));
