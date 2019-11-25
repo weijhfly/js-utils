@@ -55,6 +55,7 @@ gulp.task('clean', function () {
 
 gulp.task('html', function () {
     return gulp.src('src/*.html')
+        .pipe(htmlmin({ collapseWhitespace: true }))
         .pipe(gulp.dest('dist'))
         .pipe(connect.reload())
 })
@@ -77,6 +78,7 @@ gulp.task('css', done => {
             ]
         }))
         .pipe(postcss(processors))//px转rem tips: 如果某个px不转换，可使用大写代替，类似1PX
+        .pipe(minifyCss())
         .pipe(gulp.dest('dist/css'))
         .pipe(connect.reload())
 
