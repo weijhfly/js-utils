@@ -10,5 +10,5 @@ npm install -g gulp
 ### 运行
 ```js
 gulp // 运行本地服务
-gulp build // 打包,前后端不分离项目建议去除代码压缩、忽略css hash计算(gulp-rev-all->dontRenameFile)
+gulp build // 打包,前后端不分离项目建议不使用gulp-rev-all
 ```
