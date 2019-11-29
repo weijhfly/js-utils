@@ -17,4 +17,5 @@
 
 ## gulp-util
 **配置gulp，实现自动刷新 + 编译ES6/less + 补全css前缀 + px转rem + 压缩图片 + 压缩代码等，方便写纯静态页**   
-插件路径：[js-utils>gulp-util](https://github.com/weijhfly/js-utils/tree/master/gulp-util)  
+插件路径：[js-utils>gulp-util](https://github.com/weijhfly/js-utils/tree/master/gulp-util)   
+参考文章：[使用gulp快速开发静态页](https://juejin.im/post/5ddb912df265da7e1966b464)  
