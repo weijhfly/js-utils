@@ -16,5 +16,5 @@
 ![rolldate](https://weijhfly.github.io/images/md5-util.png)   
 
 ## gulp-util
-**配置gulp，实现自动刷新+编译less+补全css前缀+px转rem，方便写纯静态页**   
+**配置gulp，实现自动刷新 + 编译ES6/less + 补全css前缀 + px转rem + 压缩图片 + 压缩代码等，方便写纯静态页**   
 插件路径：[js-utils>gulp-util](https://github.com/weijhfly/js-utils/tree/master/gulp-util)  

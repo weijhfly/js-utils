@@ -18,13 +18,12 @@ const RevAll = require("gulp-rev-all");
 
 const babel = require('gulp-babel');
 
-//const gulpIf = require('gulp-if');
+const gulpIf = require('gulp-if');
 
 const del = require('del');
 
 const uglify = require('gulp-uglify');
 
-//const gutil = require('gulp-util');
 const minifyCss = require('gulp-clean-css');
 
 const htmlmin = require('gulp-htmlmin');
@@ -34,6 +33,8 @@ const jshint = require('gulp-jshint');
 const connect = require('gulp-connect');
 
 const revdel = require('gulp-rev-delete-original');
+
+const browserify = require('gulp-browserify');
 
 /**
  * 静态服务器
@@ -89,9 +90,11 @@ gulp.task('js', function () {
     return gulp.src('src/js/**/*.js')
         //.pipe(jshint())//检查代码
         .pipe(babel({//编译ES6
-            presets: ['@babel/env']
+            presets: ['@babel/env'],
+            plugins: ["@babel/plugin-transform-runtime"]
         }))
-        .pipe(uglify())//压缩js
+        .pipe(browserify())
+        //.pipe(uglify())//压缩js
         .pipe(gulp.dest('dist/js'))
         .pipe(connect.reload())
 })
@@ -101,9 +104,17 @@ gulp.task('js', function () {
  */
 gulp.task('images', function () {
     return gulp.src('src/images/**/*.+(png|jpg|jpeg|gif|svg)')
-        .pipe(imagemin())
+        //.pipe(imagemin()) //放到hash阶段
         .pipe(gulp.dest('dist/images'))
 });
+
+let isImage = function (file) {
+    if (file.history[0].match(/\.jpg|\.jpeg|\.png/i)) {  
+        return true;      
+    } else {      
+        return false;          
+    }      
+}
 
 /**
  * hash
@@ -111,6 +122,12 @@ gulp.task('images', function () {
 gulp.task("hash", done => {
     gulp
         .src("dist/**")
+        .pipe(
+            gulpIf('*.js',uglify())
+        )
+        .pipe(  
+            gulpIf(isImage, imagemin()) 
+        )
         .pipe(
             RevAll.revision({
                 dontRenameFile: [/\.html$/]

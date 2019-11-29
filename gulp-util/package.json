@@ -16,11 +16,15 @@
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.7.2",
+    "@babel/plugin-transform-runtime": "^7.7.4",
     "@babel/preset-env": "^7.7.1",
+    "@babel/runtime": "^7.7.4",
+    "babel-polyfill": "^6.26.0",
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-babel": "^8.0.0",
+    "gulp-browserify": "^0.5.1",
     "gulp-clean-css": "^4.2.0",
     "gulp-connect": "^5.7.0",
     "gulp-htmlmin": "^5.0.1",
@@ -32,7 +36,6 @@
     "gulp-rev-all": "^2.0.2",
     "gulp-rev-delete-original": "^0.2.3",
     "gulp-uglify": "^3.0.2",
-    "gulp-util": "^3.0.8",
     "jshint": "^2.10.3",
     "postcss-px2rem": "^0.3.0"
   }

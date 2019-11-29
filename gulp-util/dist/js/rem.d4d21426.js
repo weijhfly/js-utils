@@ -1,1 +1,0 @@
-"use strict";var rem=function(){var e=document.documentElement.clientWidth,t=document.documentElement;1024<e&&(e=1024,t.style.maxWidth="1024px",t.style.margin="0 auto"),t.style.fontSize=e/7.5+"px"};rem(),window.addEventListener("resize",function(){rem()},!1);
