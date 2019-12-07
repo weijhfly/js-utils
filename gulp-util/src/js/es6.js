@@ -1,3 +1,4 @@
+import 'promise-polyfill/dist/polyfill';
 
 // let const
 ;(function(){
