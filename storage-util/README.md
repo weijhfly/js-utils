@@ -99,17 +99,17 @@ new StorageUtil().set('key1',1).setType(1).set('key2',2).
 ```
 #### 无限链式  
 ```js
-new StorageUtil().set('msg','你翩翩地路过，').get('msg',function(msg){
+new StorageUtil().set('msg','你翩翩地路过').get('msg',function(msg){
     console.log(msg);
-  }).setType(1).set('msg','以为不曾留下什么，').get('msg',function(msg){
+  }).setType(1).set('msg','以为不曾留下什么').get('msg',function(msg){
     console.log(msg);
-  }).setType(2).set('msg','却在我心里有了思念，').get('msg',function(msg){
+  }).setType(2).set('msg','却在我心里有了思念').get('msg',function(msg){
     console.log(msg);
-  }).setType().set('msg','若你还记得，').get('msg',function(msg){
+  }).setType().set('msg','若你还记得').get('msg',function(msg){
     console.log(msg);
-  }).setType(1).set('msg','那个蝉鸣的夏天，').get('msg',function(msg){
+  }).setType(1).set('msg','那个蝉鸣的夏天').get('msg',function(msg){
     console.log(msg);
-  }).setType(2).set('msg','有一个你，也有一个我。').get('msg',function(msg){
+  }).setType(2).set('msg','有一个你，也有一个我').get('msg',function(msg){
     console.log(msg);
   })
 
@@ -119,6 +119,13 @@ new StorageUtil().set('msg','你翩翩地路过，').get('msg',function(msg){
 new StorageUtil().set({key3:3,key4:4}).get('key3,key4',function(key3,key4){
     console.log(key3,key4);
   }).remove('key3,key4');
+```
+
+#### 清空所有  
+```js
+new StorageUtil().clear();
+new StorageUtil(1).clear();
+new StorageUtil(2).clear();
 ```
 ### License
 

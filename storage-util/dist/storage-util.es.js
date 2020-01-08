@@ -1,6 +1,6 @@
 /**
- * storage-util v1.0.4
- * (c) 2019-2019 weijhfly https://github.com/weijhfly/js-utils
+ * storage-util v1.1.4
+ * (c) 2019-2020 weijhfly https://github.com/weijhfly/js-utils
  * Licensed under MIT
  */
 
@@ -58,6 +58,21 @@ var StorageUtil = /** @class */ (function () {
         }
         return this;
     };
+    StorageUtil.prototype.clear = function () {
+        try {
+            if (this.isCookie()) {
+                var keys = document.cookie.split(';').map(function (v) { return v.substr(0, v.indexOf('=')); });
+                this.master(keys, 'remove');
+            }
+            else {
+                window[this.type].clear();
+            }
+        }
+        catch (e) {
+            console.error(e);
+        }
+        return this;
+    };
     StorageUtil.prototype.setType = function (type) {
         type = type ? type : 0;
         var types = ['sessionStorage', 'localStorage', 'cookie'];
@@ -88,7 +103,7 @@ var StorageUtil = /** @class */ (function () {
                 result.push(_this.isJson(value) || value);
             }
             else {
-                var value = window[_this.type][key];
+                var value = window[_this.type].getItem(key);
                 result.push(_this.isJson(value) || value);
             }
         }
@@ -101,7 +116,7 @@ var StorageUtil = /** @class */ (function () {
                 document.cookie = key + "=" + escape(value) + ";expires=" + date.toUTCString();
             }
             else {
-                window[_this.type][key] = value;
+                window[_this.type].setItem(key, value);
             }
         }
         function remove(key) {
@@ -112,7 +127,7 @@ var StorageUtil = /** @class */ (function () {
                     document.cookie = key + "=" + value + ";expires=" + date.toUTCString();
             }
             else {
-                delete window[_this.type][key];
+                window[_this.type].removeItem(key);
             }
         }
     };

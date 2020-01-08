@@ -62,6 +62,21 @@ class StorageUtil {
 		return this;
 	}
 
+	clear (){
+		try {
+			if( this.isCookie()){
+				var keys = document.cookie.split(';').map((v) => v.substr(0, v.indexOf('=')));
+
+				this.master(keys,'remove');
+			}else{
+				window[this.type].clear();
+			}
+		} catch(e) {
+			console.error(e);
+		}
+		return this;
+	}
+
 	setType (type){
 		type = type? type : 0;
 
@@ -98,7 +113,7 @@ class StorageUtil {
 
 				result.push(_this.isJson(value) || value);
 			}else{
-				var value = window[_this.type][key];
+				var value = window[_this.type].getItem(key);
 
 				result.push(_this.isJson(value) || value);
 			}
@@ -114,7 +129,7 @@ class StorageUtil {
 				date.setTime(date.getTime() + time);
 				document.cookie = key + "=" + escape(value) + ";expires=" + date.toUTCString();
 			}else{
-				window[_this.type][key] = value;
+				window[_this.type].setItem(key, value);
 			}
 		}
 		function remove(key){
@@ -126,7 +141,7 @@ class StorageUtil {
 
 				if (value != null) document.cookie = key + "=" + value + ";expires=" + date.toUTCString();
 			}else{
-				delete window[_this.type][key];
+				window[_this.type].removeItem(key);
 			}
 		}
 	}
